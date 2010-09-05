@@ -19,7 +19,9 @@ def post(request):
         wall = PostingWall.objects.filter(content_type=ctype, object_id=object.pk)
         if not wall:
             wall = PostingWall.objects.create(content_type=ctype, object_id=object.pk)
-
+        else:
+            wall = wall[0]
+            
         # create posting on the wall
         Posting.objects.create(creator=request.user, posting_wall=wall,
                                body=request.POST.get("post"))

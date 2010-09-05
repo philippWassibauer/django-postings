@@ -24,7 +24,7 @@ class Posting(models.Model):
         get_latest_by       = 'created_at'
 
     def __unicode__(self):
-        return 'posting created by %s on %s ( %s )' % ( self.author.username, \
+        return 'posting created by %s on %s ( %s )' % ( self.creator.username, \
                                   self.created_at, truncatewords(self.body, 9 ))
 
 
