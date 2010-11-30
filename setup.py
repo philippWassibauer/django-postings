@@ -1,5 +1,6 @@
 from setuptools import setup, find_packages
- 
+import datetime
+
 version = '0.1'
  
 LONG_DESCRIPTION = """
@@ -9,7 +10,7 @@ a facebook wall
  
 setup(
     name='django-postings',
-    version=version,
+    version = datetime.datetime.strftime(datetime.datetime.now(), '%Y.%m.%d'),
     description="django-postings",
     long_description=LONG_DESCRIPTION,
     classifiers=[

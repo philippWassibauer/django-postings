@@ -1,14 +1,34 @@
-<div class="wall">
-    <form action="{% url new_posting %}" method="POST">
+
+<form class="wall-form" action="{% url new_posting %}" method="POST">
+    <div class="wall">
         {% csrf_token %}
         <input type="hidden" name="content_type" value="{{content_type}}" />
         <input type="hidden" name="object_id" value="{{object_id}}" />
         <textarea name="post"></textarea><button type="submit"></button>
         <div class="attachments">
             <span class="title">{% trans "Attach" %}</span>
-            <span>{% trans "Image" %}</span>
-            <span>{% trans "Video" %}</span>
-            <span>{% trans "Link" %}</span>  
+            <a href="#image-attachment">{% trans "Image" %}</a>
+            <a href="#video-attachment">{% trans "Video" %}</a>
+            <a href="#link-attachment">{% trans "Link" %}</a>  
         </div>
-    </form>
-</div>
+    </div>
+    <div id="image-attachment" class="image-attachment attachment">
+        <h3>{% trans "Upload a File from your Computer" %}</h3>
+        <input type="file" name="image-attachment" />
+    </div>
+    <div id="link-attachment" class="link-attachment attachment">
+        <h3>{% trans "Share a Link" %}</h3>
+        <input type="text" name="link-attachment" />
+    </div>
+</form>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".attachments a").click(function(){
+            $(".wall-form .attachment").hide()
+            $(".wall-form "+$(this).attr("href")).show()
+            return false;
+        })
+    })
+</script>
