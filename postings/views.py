@@ -23,7 +23,18 @@ def post(request):
             wall = wall[0]
             
         # create posting on the wall
-        Posting.objects.create(creator=request.user, posting_wall=wall,
+        posting = Posting.objects.create(creator=request.user, posting_wall=wall,
                                body=request.POST.get("post"))
+        
+        attachment = []
+        if "attachments" in settings.INSTALLED_APPS:
+            from attachments.models import add_attachment
+            attachment = add_attachment(posting, request.POST.get("attachment_id"))
+            
+        return render_to_response("postings/posting_form_reply.html",{
+            "posting": posting,
+            "content_type": ctype,
+            "object_id": posting.pk,
+        }, context_instance=RequestContext(request))
         
     return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
