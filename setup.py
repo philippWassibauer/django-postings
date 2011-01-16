@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import datetime
 
-version = '0.2'
+version = '0.3'
  
 LONG_DESCRIPTION = """
 The django-postings app can be attached to any object and functions similar to

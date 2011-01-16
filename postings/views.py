@@ -10,31 +10,18 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 
 from models import Posting, PostingWall
+from forms import PostingForm
 
 def post(request):
     if request.POST:
-        # get wall, check if it exists
-        ctype = ContentType.objects.get(pk=request.POST.get("content_type"))
-        object = ctype.get_object_for_this_type(pk=request.POST.get("object_id"))
-        wall = PostingWall.objects.filter(content_type=ctype, object_id=object.pk)
-        if not wall:
-            wall = PostingWall.objects.create(content_type=ctype, object_id=object.pk)
+        form = PostingForm(request.POST)
+        if form.is_valid():
+            posting = form.save(request.user)
+            return render_to_response("postings/posting_form_reply.html",{
+                "posting": posting,
+                "content_type": form.cleaned_data["content_type"],
+                "object_id": form.cleaned_data["object_id"],
+            }, context_instance=RequestContext(request))
         else:
-            wall = wall[0]
-            
-        # create posting on the wall
-        posting = Posting.objects.create(creator=request.user, posting_wall=wall,
-                               body=request.POST.get("post"))
-        
-        attachment = []
-        if "attachments" in settings.INSTALLED_APPS:
-            from attachments.models import add_attachment
-            attachment = add_attachment(posting, request.POST.get("attachment_id"))
-            
-        return render_to_response("postings/posting_form_reply.html",{
-            "posting": posting,
-            "content_type": ctype,
-            "object_id": posting.pk,
-        }, context_instance=RequestContext(request))
-        
+            return HttpResponse(status=400, content="Form was not valid")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
