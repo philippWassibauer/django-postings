@@ -35,5 +35,5 @@ def new_comment(handler=None, instance=None, created=False, **kwargs):
             
             
 def start_listening():
-    post_save.connect(new_comment, sender=Comment)
+    post_save.connect(new_comment, sender=Comment, dispatch_uid="posting.got.commented")
    
