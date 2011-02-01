@@ -46,6 +46,7 @@ class Posting(models.Model):
     body        = models.TextField(_('item_body'))
     created_at  = models.DateTimeField(_('created at'), default=datetime.now)
 
+
     class Meta:
         verbose_name        = _('wallitem')
         verbose_name_plural = _('wallitems')
@@ -57,3 +58,5 @@ class Posting(models.Model):
                                   self.created_at, truncatewords(self.body, 9 ))
 
 
+from listeners import start_listening
+start_listening()

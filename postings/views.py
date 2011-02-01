@@ -12,6 +12,7 @@ from django.contrib.contenttypes.models import ContentType
 from models import Posting, PostingWall
 from forms import PostingForm
 
+@login_required
 def post(request):
     if request.POST:
         form = PostingForm(request.POST)
@@ -25,3 +26,13 @@ def post(request):
         else:
             return HttpResponse(status=400, content="Form was not valid")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
+    
+    
+@login_required   
+def posting(request, id):
+    posting = get_object_or_404(Posting, pk=id)
+    return render_to_response("postings/posting.html",{
+        "posting": posting,
+    }, context_instance=RequestContext(request))
+    
+    

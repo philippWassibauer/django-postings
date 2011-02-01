@@ -5,4 +5,5 @@ from views import *
 
 urlpatterns = patterns('',
     url(r'^post$', post, name="new_posting"),
+    url(r'^posting/(?P<id>[\d]+)/$', post, name="posting"),
 )
