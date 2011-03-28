@@ -41,7 +41,7 @@ class Posting(models.Model):
     """
     A simple note to post on a wall.
     """
-    posting_wall= models.ForeignKey('PostingWall')
+    posting_wall= models.ForeignKey('PostingWall', related_name="postings")
     creator     = models.ForeignKey(User, related_name="postings")
     body        = models.TextField(_('item_body'))
     created_at  = models.DateTimeField(_('created at'), default=datetime.now)
