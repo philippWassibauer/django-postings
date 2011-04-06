@@ -41,7 +41,7 @@ def delete(request, id):
     if request.method == "POST":
         if posting.creator == request.user:
             posting.delete()
-            return HttpResponse(statuc=200, content="OK")
+            return HttpResponse(status=200, content="OK")
     return HttpResponse(status=400, content="Not allowed")
     
     
