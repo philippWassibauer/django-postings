@@ -35,4 +35,13 @@ def posting(request, id):
         "posting": posting,
     }, context_instance=RequestContext(request))
     
+@login_required
+def delete(request, id):
+    posting = get_object_or_404(Posting, pk=id)
+    if request.method == "POST":
+        if posting.creator == request.user:
+            posting.delete()
+            return HttpResponse(statuc=200, content="OK")
+    return HttpResponse(status=400, content="Not allowed")
+    
     
