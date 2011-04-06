@@ -1,5 +1,5 @@
 from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponseRedirect, Http404, HttpResponsePermanentRedirect
+from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponsePermanentRedirect
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
