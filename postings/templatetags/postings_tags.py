@@ -33,6 +33,7 @@ def object_postings(object, user, offset=0, count=10):
 
 @register.inclusion_tag("postings/postings.html")
 def wall_postings(wall, user, offset=0, count=10):
-    return {"postings": wall.postings.all()[offset:count],
+    postings = wall.postings.all()[offset:count]
+    return {"postings": list(postings), # make a list, so it is possible to fetch last item
             "user": user,
             "wall": wall}

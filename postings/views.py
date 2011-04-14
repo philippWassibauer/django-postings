@@ -12,6 +12,17 @@ from django.contrib.contenttypes.models import ContentType
 from models import Posting, PostingWall
 from forms import PostingForm
 
+
+def load_postings(request, id, template_name="postings/posting_list.html"):
+    wall = get_object_or_404(PostingWall, pk=id)
+    last_posting = int(request.GET.get("last_posting"))
+    postings = wall.postings.filter(pk__lt=last_posting)[0:20]
+    return render_to_response(template_name,{
+        "postings": list(postings),
+        "wall": wall,
+    }, context_instance=RequestContext(request))
+    
+    
 @login_required
 def post(request):
     if request.POST:
