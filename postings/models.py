@@ -57,6 +57,9 @@ class Posting(models.Model):
         return 'posting created by %s on %s ( %s )' % ( self.creator.username, \
                                   self.created_at, truncatewords(self.body, 9 ))
 
-
+    def get_absolute_url(self):
+        return ("posting", [self.pk])
+    get_absolute_url = models.permalink(get_absolute_url)
+    
 from listeners import start_listening
 start_listening()
