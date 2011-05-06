@@ -13,7 +13,7 @@ from models import PostingWall, Posting
 class PostingForm(forms.Form):
     content_type = forms.IntegerField()
     object_id = forms.IntegerField()
-    post = forms.CharField()
+    post = forms.CharField(required=False)
     
     def save(self, user, *args, **kwargs):
         # get wall, check if it exists

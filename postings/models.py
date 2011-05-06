@@ -43,7 +43,7 @@ class Posting(models.Model):
     """
     posting_wall= models.ForeignKey('PostingWall', related_name="postings")
     creator     = models.ForeignKey(User, related_name="postings")
-    body        = models.TextField(_('item_body'))
+    body        = models.TextField(_('item_body'), null=True, blank=True)
     created_at  = models.DateTimeField(_('created at'), default=datetime.now)
 
 
